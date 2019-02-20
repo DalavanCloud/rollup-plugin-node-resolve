@@ -29,7 +29,9 @@ export default {
       module: true, // Default: true
 
       // use "jsnext:main" if possible
-      // – see https://github.com/rollup/rollup/wiki/jsnext:main
+      // legacy field pointing to ES6 module in third-party libraries,
+      // deprecated in favor of "pkg.module":
+      // - see: https://github.com/rollup/rollup/wiki/pkg.module
       jsnext: true,  // Default: false
 
       // use "main" field or index.js, even if it's not an ES6 module
@@ -44,15 +46,20 @@ export default {
       browser: true,  // Default: false
 
       // not all files you want to resolve are .js files
-      extensions: [ '.js', '.json' ],  // Default: ['.js']
+      extensions: [ '.mjs', '.js', '.jsx', '.json' ],  // Default: [ '.mjs', '.js', '.json', '.node' ]
 
       // whether to prefer built-in modules (e.g. `fs`, `path`) or
       // local ones with the same names
       preferBuiltins: false,  // Default: true
 
       // Lock the module search in this path (like a chroot). Module defined
-      // outside this path will be mark has external
+      // outside this path will be marked as external
       jail: '/my/jail/path', // Default: '/'
+
+      // Set to an array of strings and/or regexps to lock the module search
+      // to modules that match at least one entry. Modules not matching any
+      // entry will be marked as external
+      only: [ 'some_module', /^@some_scope\/.*$/ ], // Default: null
 
       // If true, inspect resolved files to check that they are
       // ES2015 modules
